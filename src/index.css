@@ -30,3 +30,34 @@ div {
   height: 100px;
   float:left;
 }
+
+#tableDiv {
+  overflow-x:auto;
+}
+
+.styled-table {
+  table-layout: fixed;
+
+}
+
+.styled-table th {
+  background-color: #036FE3;
+  color: #ffffff;
+  text-align: left;
+  font-weight: 700;    
+  padding: 3px 3px;
+  word-wrap: break-word
+}
+
+.styled-table td {
+    padding: 3px 3px;
+    word-wrap: break-word;
+}
+
+.styled-table tr {
+  border-bottom: 1px solid #b6b4b4;
+}
+
+.styled-table tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
