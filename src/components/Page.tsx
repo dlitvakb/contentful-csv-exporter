@@ -44,6 +44,15 @@ class Page extends React.Component<PageProps, PageState> {
   }
 
   async changeContentType(e: any) {
+    if (e.target.value === '') {
+      this.setState({
+        contentType: undefined,
+        entries: [],
+        csvText: ''
+      })
+      return
+    }
+
     let contentType = await this.props.sdk.space.getContentType(e.target.value)
     let entries: any[] = []
     let total = (await this.props.sdk.space.getEntries({content_type: contentType.sys.id, limit: 0})).total
@@ -72,7 +81,7 @@ class Page extends React.Component<PageProps, PageState> {
 
   csvAsText(entries: Array<EntryAPI>, contentType: any) {
     if (entries.length >= 1) {
-      return renderCSV(entries, contentType, this.state.locale, '\t')
+      return renderCSV(entries, contentType, this.state.locale, '\x09')
     }
     return ''
   }
@@ -81,7 +90,7 @@ class Page extends React.Component<PageProps, PageState> {
     const element = document.createElement("a");
     const file = new Blob([this.state.csvText], {type: 'text/csv;charset=utf-8'});
     element.href = URL.createObjectURL(file);
-    element.download = this.state.contentType.sys.id + '-' + this.state.locale + '.csv';
+    element.download = this.state.contentType.sys.id + '-' + this.props.sdk.ids.space + '-' + this.state.locale + '.csv';
     document.body.appendChild(element);
     element.click();
   }

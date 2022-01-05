@@ -27,14 +27,14 @@ class Sidebar extends React.Component<SidebarProps, SidebarState> {
   }
 
   changeLocale(e: any) {
-    this.setState({locale: e.target.value, csvText: renderCSV([this.props.sdk.entry], this.props.sdk.contentType, this.state.locale, '\t')})
+    this.setState({locale: e.target.value, csvText: renderCSV([this.props.sdk.entry], this.props.sdk.contentType, this.state.locale, '\x09')})
   }
 
   download() {
     const element = document.createElement("a");
     const file = new Blob([this.state.csvText], {type: 'text/csv;charset=utf-8'});
     element.href = URL.createObjectURL(file);
-    element.download = this.props.sdk.entry.getSys().id + '-' + this.state.locale + '.csv';
+    element.download = this.props.sdk.entry.getSys().id + '-' + this.props.sdk.ids.space + '-' + this.state.locale + '.csv';
     document.body.appendChild(element);
     element.click();
   }
