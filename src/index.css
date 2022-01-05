@@ -8,3 +8,25 @@ div {
   font: inherit;
   vertical-align: baseline;
 }
+
+#buttonDiv {
+  width:100%;
+  height: 50px;
+  display:inline-block;
+}
+
+#buttonDiv .downloadButton{
+  float:right;
+}
+
+#container {
+  width:100%;
+  text-align:left;
+  position: relative;
+}
+
+#container > div {
+  width: 50%;
+  height: 100px;
+  float:left;
+}

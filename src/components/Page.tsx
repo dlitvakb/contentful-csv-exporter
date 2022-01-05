@@ -1,7 +1,7 @@
 import React from 'react';
 import { PlainClientAPI } from 'contentful-management';
 import { EntryAPI } from '@contentful/app-sdk';
-import { Paragraph, Typography, Textarea, Select, Option, Button } from '@contentful/forma-36-react-components';
+import { Paragraph, Typography, Textarea, Select, Option, Button, Workbench, Heading, FormLabel, HelpText } from '@contentful/forma-36-react-components';
 import { PageExtensionSDK } from '@contentful/app-sdk';
 import { renderCSV } from '../helpers/csv'
 
@@ -97,22 +97,44 @@ class Page extends React.Component<PageProps, PageState> {
 
   render() {
     return (<>
+
+    <Workbench>
+    
+      
+      
+ 
+
+  <Workbench.Content>
       <Typography>
-        <Paragraph>
-          Locale: <Select id="localeSelect" name="localeSelect" width="large" value={this.state.locale} onChange={this.changeLocale}>
-            {Object.entries(this.props.sdk.locales.names).map(([id, name]) => <Option value={id} key={'locale-' + id}>{name}</Option>)}
-          </Select>
-        </Paragraph>
-        <Paragraph>
-          Content Type: <Select id="contentTypeSelect" name="localeSelect" width="large" value={(this.state.contentType && this.state.contentType.sys.id) || ''} onChange={this.changeContentType}>
-            <Option value={''}>None</Option>
-            {this.state.contentTypeIds.map(ct => <Option value={ct.id} key={'ct-' + ct.id}>{ct.name}</Option>)}
-          </Select>
-        </Paragraph>
-        <Paragraph>All entries for this Content Type as CSV:</Paragraph>
-        <Textarea disabled value={this.state.csvText} rows={20} />
-        <Button disabled={!this.state.csvText} onClick={() => {this.download()}}>Download as CSV</Button>
+      <Heading>Generic CSV Export</Heading>
+        <div id='buttonDiv'>
+          <Button className='downloadButton' disabled={!this.state.csvText} onClick={() => {this.download()}}>Download as CSV</Button>
+        </div>
+        
+        <div id='container'>
+          <div id='leftContainer'>
+            <FormLabel htmlFor="locale">Locale</FormLabel>
+            <Select id="localeSelect" name="localeSelect" width="large" value={this.state.locale} onChange={this.changeLocale}>
+                {Object.entries(this.props.sdk.locales.names).map(([id, name]) => <Option value={id} key={'locale-' + id}>{name}</Option>)}
+            </Select>
+            <HelpText>Select the locale</HelpText>
+          </div>
+          <div id='rightContainer'>
+            <FormLabel htmlFor="contentTypes">Content Types</FormLabel><Select id="contentTypeSelect" name="localeSelect" width="large" value={(this.state.contentType && this.state.contentType.sys.id) || ''} onChange={this.changeContentType}>
+                <Option value={''}>None</Option>
+                {this.state.contentTypeIds.map(ct => <Option value={ct.id} key={'ct-' + ct.id}>{ct.name}</Option>)}
+            </Select>  
+            <HelpText>Select a content type</HelpText>
+          </div>
+        </div>
+
+     
+      <FormLabel htmlFor="txtbox">All entries for this Content Type as CSV</FormLabel>
+      <Textarea disabled value={this.state.csvText} rows={20} />
+     
       </Typography>
+      </Workbench.Content>
+      </Workbench>
     </>)
   }
 };
