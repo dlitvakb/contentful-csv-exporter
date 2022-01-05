@@ -21,9 +21,9 @@ export function serializeValue(field: any, fieldId: string, contentType: Content
 
     let fieldType = contentType.fields.find(f => f.id === fieldId)!.type
 
-    if (['Text', 'Symbol', 'Date'].includes(fieldType)) return (value as string).replace('\n', '\\n').replace('\r', '\\r')
+    if (['Text', 'Symbol', 'Date'].includes(fieldType)) return (value as string).split('\n').join('\\n')
     if (['Number', 'Integer'].includes(fieldType)) return value + ''
-    if (['RichText', 'Object', 'Link', 'Array', 'Location'].includes(fieldType)) return JSON.stringify(value).replace('\n', '\\n').replace('\r', '\\r')
+    if (['RichText', 'Object', 'Link', 'Array', 'Location'].includes(fieldType)) return JSON.stringify(value).split('\n').join('\\n')
     if (fieldType === 'Boolean') return value ? 'true' : 'false'
   } catch {
     // explicitly silenced
